@@ -1,0 +1,12 @@
+import { MJInfo, MJOptions } from "../interfaces";
+export declare const sleep: (ms: number) => Promise<void>;
+export declare const random: (min: number, max: number) => number;
+export declare const nextNonce: () => string;
+export declare const formatPrompts: (prompts: string) => string[];
+export declare const formatOptions: (components: any) => MJOptions[];
+export declare const formatInfo: (msg: string) => MJInfo;
+export declare const uriToHash: (uri: string) => string;
+export declare const content2progress: (content: string) => string;
+export declare const content2prompt: (content: string) => string;
+export declare function custom2Type(custom: string): "upscale" | "variation" | "reroll" | "customZoom" | null;
+export declare const toRemixCustom: (customID: string) => string;

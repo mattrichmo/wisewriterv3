@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="en">
+  <head>
+    <meta name="dtb:uid"
+          content="urn:uuid:86CDFAA8-11C4-464E-B578-E1EF741185BD" />
+    <meta name="dtb:depth"
+          content="1" />
+    <meta name="dtb:totalPageCount"
+          content="0" />
+    <meta name="dtb:maxPageNumber"
+          content="0" />
+    <meta name="dtb:generator"
+          content="Vellum" />
+  </head>
+  <docTitle>
+    <text>Tender Mercies</text>
+  </docTitle>
+  <navMap>
+    <navPoint id="np1" playOrder="1">
+      <navLabel>
+        <text>Title Page</text>
+      </navLabel>
+      <content src="title-page.xhtml" />
+  </navPoint>
+  <navPoint id="np2" playOrder="2">
+    <navLabel>
+      <text>Copyright</text>
+    </navLabel>
+    <content src="copyright.xhtml" />
+</navPoint>
+<navPoint id="np3" playOrder="3">
+  <navLabel>
+    <text>Dedication</text>
+  </navLabel>
+  <content src="dedication.xhtml" />
+</navPoint>
+<navPoint id="np4" playOrder="4">
+  <navLabel>
+    <text>Contents</text>
+  </navLabel>
+  <content src="contents.xhtml" />
+</navPoint>
+<navPoint id="np5" playOrder="5">
+  <navLabel>
+    <text>Introduction</text>
+  </navLabel>
+  <content src="introduction.xhtml" />
+</navPoint>
+<navPoint id="np6" playOrder="6">
+  <navLabel>
+    <text>1. The First Days</text>
+  </navLabel>
+  <content src="chapter-001.xhtml" />
+</navPoint>
+<navPoint id="np7" playOrder="7">
+  <navLabel>
+    <text>2. The Body</text>
+  </navLabel>
+  <content src="chapter-002.xhtml" />
+</navPoint>
+<navPoint id="np8" playOrder="8">
+  <navLabel>
+    <text>3. The Mind</text>
+  </navLabel>
+  <content src="chapter-003.xhtml" />
+</navPoint>
+<navPoint id="np9" playOrder="9">
+  <navLabel>
+    <text>4. The Partner</text>
+  </navLabel>
+  <content src="chapter-004.xhtml" />
+</navPoint>
+<navPoint id="np10" playOrder="10">
+  <navLabel>
+    <text>5. The Family</text>
+  </navLabel>
+  <content src="chapter-005.xhtml" />
+</navPoint>
+<navPoint id="np11" playOrder="11">
+  <navLabel>
+    <text>6. The World</text>
+  </navLabel>
+  <content src="chapter-006.xhtml" />
+</navPoint>
+<navPoint id="np12" playOrder="12">
+  <navLabel>
+    <text>7. The Memories</text>
+  </navLabel>
+  <content src="chapter-007.xhtml" />
+</navPoint>
+<navPoint id="np13" playOrder="13">
+  <navLabel>
+    <text>8. The Lessons</text>
+  </navLabel>
+  <content src="chapter-008.xhtml" />
+</navPoint>
+<navPoint id="np14" playOrder="14">
+  <navLabel>
+    <text>Afterword</text>
+  </navLabel>
+  <content src="afterword.xhtml" />
+</navPoint>
+</navMap>
+</ncx>

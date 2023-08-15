@@ -1,0 +1,31 @@
+# Ignore all image files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.json
+*.DS_Store
+
+# Ignore export folder
+/export/
+/src/
+
+# Ignore backup folder
+/backup/
+
+# Ignore test folder
+/test/
+
+# Ignore folders
+/node_modules/
+/export/
+/backup/
+/testingGround/
+
+# Ignore
+.env
+*.env
+kdpcookies.json
+
+erotic.mjs
