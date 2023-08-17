@@ -59,3 +59,9 @@ We format the book, and take the generated image to a final epub book.
 
 ## Upload to Amazon
 Using Pupeteer we then upload the new ebook to amazon and set it as a draft for us to quality check. # wisewriterv3
+
+//TODO 
+1. upload to pinterest
+2.create pinterest ad
+3.monitor ad
+4.Reiteration of product
