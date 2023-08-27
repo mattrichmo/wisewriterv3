@@ -1,4 +1,4 @@
-
+//#region Imports
 import dotenv from 'dotenv';
 import fs from 'fs';
 import fsp from "fs/promises";
@@ -19,11 +19,11 @@ const configuration = new Configuration({
     apiKey: process.env.OPENAI_KEY,
 });
 const openai = new OpenAIApi(configuration);
+//#endregion
 
+//////// ------ *** GLOBAL OBJECTS *** ------ ////////
 
-
-
-
+//#region Test Region Global Objects
 const bookData = {
     bookGenContent: {
         chapterTitle: [''],
@@ -43,27 +43,27 @@ const bookData = {
       lastGenSummary:[[[[[['']]]]]],
     },
     bookInputs: {
-        numBooks: '1', 
-        numChapterTitle: '2', 
-        numPlots: '2', 
-        numTitles: '1', 
-        bookType: 'Short Stories', 
-        bookGenre: 'Fiction', 
+        numBooks: '1', /// Number of books (leave this as 1 but the plan is to create an option to generate series in the future)
+        numChapterTitle: '2', /// Number of Chapters and It's titles to Generate
+        numPlots: '2', /// Number of Concepts Per Chapter
+        numTitles: '1', /// Number of Titles Per Concept
+        bookType: 'Short Stories', ///
+        bookGenre: 'Fiction', /// Genre of the book
         simpleAudienceInfo:'People who like to read engaging stories while using transit to commute to work.',
-        theme: 'Stories to read on the bus', 
-        emotion: 'happy and hilarious', 
-        desiredLength: 1200, 
+        theme: 'Stories to read on the bus', /// Theme of the book
+        emotion: 'happy and hilarious', /// Emotion of the book
+        desiredLength: 1200, // Length of the content in words
     },
     bookInit: {
-        bookDescription: "This is a book description", 
-        bookTheme: "farting on the bus", 
-        bookEmotion: "happiness", 
-        bookGenre: "humour", 
-        bookTopic: "farting", 
-        authorChoice: "", 
-        longDescription: "", 
-        chapterOutlinePrompt: "", 
-        storyInstructions: " The protaganist should be going through lots of ups and down", 
+        bookDescription: "This is a book description", // description of the book
+        bookTheme: "farting on the bus", // theme of the book
+        bookEmotion: "happiness", // emotion of the book
+        bookGenre: "humour", // genre of the book
+        bookTopic: "farting", // topic of the book
+        authorChoice: "", // author choice
+        longDescription: "", // long description of the book
+        chapterOutlinePrompt: "", // prompt for the content. How would we describe the content to the AI?
+        storyInstructions: " The protaganist should be going through lots of ups and down", // instructions for the AI on how to write the content
     },
     bookMeta: {
         bookTitle: 'The Curious Case of the Missing Socks',
@@ -78,15 +78,15 @@ const bookData = {
         bestTitle: '',
         bestSubtitle: '',
         titleOptions: [],
-        titleScore: [], 
+        titleScore: [], //
         subtitleOptions: [[]],
         subtitleScore: [[]],
         titleResponseJSON: '',
     },
     bookPrompts: {
-        bookDescription: '', 
-        chapterOutlinePrompt: '', 
-        storyInstructions: '', 
+        bookDescription: '', // short description of the book
+        chapterOutlinePrompt: '', // prompt for the content. How would we describe the content to the AI?
+        storyInstructions: '', // instructions for the AI on how to write the content
     },
     audienceInfo: {
         briefDemo: "Young professionals looking for adventure",
@@ -128,31 +128,31 @@ const bookData = {
     mjPrompts: {
       frontCoverPrompt: '',
       backCoverPrompt: '',
-      pinterestAdPrompt: '', 
-      WPpostPrompt: '', 
+      pinterestAdPrompt: '', // 3 different prompts for pinterest. To be used for pinterest ads
+      WPpostPrompt: '', // single prompt each chapter in book.chapters 
     },
     bookCoverIMGPrompt: {
-      imageStyle: '', 
-      imageSubject: '', 
-      imageSubjectAction: '', 
-      imageSubjectEmotion: '', 
-      imageSubjectLocation: '', 
-      imageLighting: '', 
-      imageColour: '', 
-      imageComposition: '', 
-      imageDescription: '', 
+      imageStyle: '', // choice between photography, illustration, and graphic design
+      imageSubject: '', // the subject of the image
+      imageSubjectAction: '', // the action of the subject
+      imageSubjectEmotion: '', // the emotion of the subject
+      imageSubjectLocation: '', // the location of the subject
+      imageLighting: '', // the lighting of the image
+      imageColour: '', // the colour of the image
+      imageComposition: '', // the composition of the image
+      imageDescription: '', // photorealistic, playful, etc.
   },
   bookCoverDesign: {
-    primaryColour: '', 
-    primaryColourName: '', 
-    primaryCompColour: '', 
-    primaryCompColourName: '', 
-    secondaryColour: '', 
-    secondaryCompColour: '', 
+    primaryColour: '', // The main Colour of the cover
+    primaryColourName: '', // The colour written as if it were a crayon name
+    primaryCompColour: '', // The main Colour of the cover
+    primaryCompColourName: '', // The colour written as if it were a crayon name
+    secondaryColour: '', // The Title Colour of the cover. Which should be contraqsty and compliment the primary colour
+    secondaryCompColour: '', // The colour of the elements
     mainFont: '', 
     secondaryFont: '',
-    logoTheme: '', 
-    coverStyle: '', 
+    logoTheme: '', // choice between light or dark. This determines the colour of the publisher logo. The colour should be opposite of the general theme. FOr example if the colours are darker then we want q light logo to stand out and vice versa. 
+    coverStyle: '', // The cover style. Choice between Modern, Classic, Minimalist, and Vintage
     mainFontPath: '',
     secondaryFontPath: '',
   },
@@ -160,17 +160,17 @@ const bookData = {
 
 };
   
+//#endregion
 
-
-
+//#region Author Objects
 
 const author = {
   Firstname: '',
   Lastname: '',
   authorBio: '',
-  aboutAuthor: '', 
+  aboutAuthor: '', // extra relevant information to craft an ideal image of who the author is. 
   authorImage: '',
-  authorWriteStyle: '', 
+  authorWriteStyle: '', // level of writing style
   authorWriteLevel: '',
   authorEducation: '',
 
@@ -179,8 +179,8 @@ const authorEmilyJacket = {
   Firstname: 'Emily',
   Lastname: 'Jacket',
   authorBio: 'Emily Jacket is a writer and editor who has worked in the publishing industry for over 10 years. She has a degree in English Literature from the University of Cambridge and a Masters in Creative Writing from the University of Oxford. She has written for a number of publications, including The Guardian, The Times, and The Independent.',
-  aboutAuthor: '', 
-  authorImage: 'hxxp:',
+  aboutAuthor: '', // extra relevant information to craft an ideal image of who the author is. 
+  authorImage: 'hxxp://',
   authorWriteStyle: 'Emily writes in a clear and concise style that is easy to read. She is also an expert at writing in a way that is engaging and entertaining.',
   authorWriteLevel: 'Medium Level',
   authorEducation: ' ',
@@ -191,7 +191,7 @@ const authorSophiaQuill = {
   Lastname: 'Quill',
   authorBio: 'Sophia Quill is an experienced writer and poet known for her evocative and lyrical prose. With a background in psychology and a deep understanding of human emotions, Sophia creates compelling characters and explores the depths of the human psyche in her works. Her writing resonates with readers who appreciate introspective and thought-provoking narratives.',
   aboutAuthor: '',
-  authorImage: 'hxxp:',
+  authorImage: 'hxxp://',
   authorWriteStyle: "Sophia's writing style is poetic and rich, painting vivid imagery with her words. She weaves intricate metaphors and uses sensory details to immerse readers in her stories.",
   authorWriteLevel: 'Advanced Level',
   authorEducation: '',
@@ -202,7 +202,7 @@ const authorNathanielThorne = {
   Lastname: 'Thorne',
   authorBio: 'Nathaniel Thorne is a historical fiction writer with a passion for bringing the past to life. His meticulously researched novels transport readers to different eras, combining compelling storytelling with accurate historical details. Nathaniel\'s works appeal to history buffs and those who enjoy immersive journeys through time.',
   aboutAuthor: '',
-  authorImage: 'hxxp:',
+  authorImage: 'hxxp://',
   authorWriteStyle: "Nathaniel's writing style is descriptive and authentic, capturing the essence of historical periods. He pays careful attention to historical accuracy while creating captivating narratives.",
   authorWriteLevel: 'Advanced Level',
   authorEducation: '',
@@ -213,7 +213,7 @@ const authorLilaRainier = {
   Lastname: 'Rainier',
   authorBio: 'Lila Rainier is a bestselling author known for her gripping thrillers and suspenseful plots. With a background in criminal psychology, Lila weaves intricate mysteries that keep readers on the edge of their seats. Her books are filled with unexpected twists and turns that leave readers guessing until the very end.',
   aboutAuthor: '',
-  authorImage: 'hxxp:',
+  authorImage: 'hxxp://',
   authorWriteStyle: "Lila's writing style is fast-paced and suspenseful, driving the narrative forward with each page. She excels at building tension and creating compelling, multi-dimensional characters.",
   authorWriteLevel: 'Intermediate Level',
   authorEducation: '',
@@ -224,16 +224,16 @@ const authorXavierBlake = {
   Lastname: 'Blake',
   authorBio: 'Xavier Blake is a science fiction and fantasy writer renowned for his imaginative worlds and epic adventures. Drawing inspiration from mythology and futuristic concepts, Xavier creates immersive narratives that transport readers to extraordinary realms. His books appeal to those seeking escapism and thrilling journeys beyond reality.',
   aboutAuthor: '',
-  authorImage: 'hxxp:',
+  authorImage: 'hxxp://',
   authorWriteStyle: "Xavier's writing style is vivid and imaginative, painting fantastical landscapes and crafting intricate mythologies. He combines action-packed scenes with deep world-building to create captivating stories.",
   authorWriteLevel: 'Intermediate Level',
   authorEducation: '',
   authorIdealReader: 'Fans of science fiction and fantasy genres, readers who enjoy epic quests and world-building, individuals seeking immersive adventures in imaginative realms.'
 };
+//#endregion
 
-
-
-
+//////// ------ *** SCHEMAS *** ------ ////////
+//#region Schemas
 const schemas = {};
 
   schemas.bookGenOutline = {
@@ -765,9 +765,9 @@ schemas.bookCoverIMGPromptSchema = {
     'imageDescription',
   ],
 };
-
-
-
+//#endregion 
+//////// ------ *** FUNCTIONS *** ------ ////////
+//#region Functions
 const callOpenAI = async (model, messages, functions, functionCall, temperature, maxTokens) => {
     let retries = 0;
     const maxRetries = 10;
@@ -786,12 +786,12 @@ const callOpenAI = async (model, messages, functions, functionCall, temperature,
 
             const responseText = completion.data.choices[0].message.function_call.arguments;
 
-            
-            
-            
-            
+            // Log raw response for debugging
+            //console.log(chalk.red('\n\n#X#X#X#X#X#X#X#X#X#X#X#X#X#X#X#X#X#X#X#X#X#X#\n\n'))
+            //console.log(chalk.yellow(`Raw Response from AI: ${responseText}`));
+            //console.log(chalk.red('\n\n#X#X#X#X#X#X#X#X#X#X#X#X#X#X#X#X#X#X#X#X#X#X#\n\n'))
 
-            
+            // Check if the response is a valid JSON
             try {
                 JSON.parse(responseText);
                 return responseText;
@@ -800,7 +800,7 @@ const callOpenAI = async (model, messages, functions, functionCall, temperature,
             }
         } catch (error) {
             console.error(`An error occurred: ${error.statusCode} - ${error.message}`);
-            
+            //console.trace(error); // Log the full stack trace of the error
 
             const wait = retries * backoffFactor * 5000;
             console.log(`Retrying in ${wait / 1000} seconds...`);
@@ -811,9 +811,9 @@ const callOpenAI = async (model, messages, functions, functionCall, temperature,
 
     throw new Error('Maximum retries reached');
 };
-
-
-
+//#endregion
+//////// ------ *** SAVERS *** ------ ////////
+//#region Savers
 
 const flattenContentParagraphs = async (contentParagraphs) => {
   const flattenedParagraphs = [];
@@ -837,29 +837,29 @@ async function formatBookContent(bookData) {
 bookData.bookFinal.bookTitle = bookData.bookMeta.bookTitle;
 bookData.bookFinal.bookSubtitle = bookData.bookMeta.bookSubtitle;
 
-
+// Extract bookGenContent for convenience.
 let bookGenContent = bookData.bookGenContent;
 
-
+// Clear the existing bookFinal content to prepare for the transformation.
 bookData.bookFinal.bookChapters = [];
 bookData.bookFinal.bookChapterContentTitle = [];
 bookData.bookFinal.bookChapterContent = [];
 
-
+// Iterating over the chapter titles.
 for(let i = 0; i < bookGenContent.chapterTitle.length; i += 1) {
-
+// Push the chapter title to bookChapters.
 bookData.bookFinal.bookChapters.push(bookGenContent.chapterTitle[i]);
 
-
+// Flatten and push the contentTitle to bookChapterContentTitle.
 let flattenedContentTitles = bookGenContent.contentTitle[i].flat(Infinity);
 bookData.bookFinal.bookChapterContentTitle.push(flattenedContentTitles);
 
-
+// Flatten and push contentFinal to bookChapterContent.
 let flattenedContentFinal = bookGenContent.contentFinal[i].flat(Infinity);
 bookData.bookFinal.bookChapterContent.push(flattenedContentFinal);
 }
 
-
+// return updated book data
 return bookData;
 }
 const exportToCSV = async (bookData) => {
@@ -885,7 +885,7 @@ const exportToCSV = async (bookData) => {
   
     const records = [];
   
-    
+    // Loop through each chapter, theme, concept, long plot, content title, and content paragraph and create a new row for each new array item
     for (let i = 0; i < bookData.bookGenContent.chapterTitle.length; i++) {
         const chapterTitle = bookData.bookGenContent.chapterTitle[i];
         const chapterTheme = bookData.bookGenContent.chapterTheme[i][0];
@@ -921,7 +921,7 @@ const exportToCSV = async (bookData) => {
 
   
 const generateMDFile = async (bookData) => {
-  
+  // Create YAML metadata block
   let content = `---
 title: ${bookData.bookMeta.bookTitle}
 subtitle: ${bookData.bookMeta.bookSubtitle}
@@ -931,38 +931,38 @@ genre: ${bookData.bookMeta.genre}
 ---
 `;
 
-  
+  // Parse and generate content for each chapter
   for(let i = 0; i < bookData.bookFinal.bookChapters.length; i++) {
-      
+      // Add chapter title as header
       content += `\n# ${bookData.bookFinal.bookChapters[i]}\n`;
 
-      
+      // Add all content titles and contents under this chapter
       let chapterContentTitles = bookData.bookFinal.bookChapterContentTitle[i];
       let chapterContents = bookData.bookFinal.bookChapterContent[i];
       for(let j = 0; j < chapterContentTitles.length; j++) {
-          
+          // Add content title as subheader
           content += `\n## ${chapterContentTitles[j]}\n`;
           
-          
+          // Add content final as text
           content += `${chapterContents[j]}\n`;
       }
 
-      
+      // Add an extra newline for readability
       content += '\n';
   }
 
-  
+  // Specify directory and filename
   const directory = `./export/${bookData.bookFinal.bookTitle}/files/raw/`;
   const filename = `${bookData.bookMeta.bookTitle}.md`;
   const filePath = path.join(directory, filename);
 
-  
+  // Ensure directory exists, if not create it
   fs.mkdirSync(directory, { recursive: true });
 
-  
+  // Write markdown content to file
   fs.writeFileSync(filePath, content);
 
-  
+  // Log the path where the file is saved
   console.log(`Markdown file generated and saved at: ${filePath}`);
 };
 
@@ -1029,27 +1029,27 @@ const renameAndMove = async (bookData) => {
   const sourceDir = './temp/';
   const destinationDir = `./export/${bookData.bookMeta.bookTitle}/files/`;
 
-  
+  // Create the destination directory if it doesn't exist
   fs.mkdir(destinationDir, { recursive: true }, (err) => {
       if (err) {
           console.error("Error in creating the directory", err);
       } else {
-          
+          // Read the files in the `./export/latest/` directory
           fs.readdir(sourceDir, (err, files) => {
               if (err) {
                   console.error("Error in reading the directory", err);
               } else {
                   files.forEach(file => {
-                      
+                      // Check if the file starts with 'book.'
                       if (file.startsWith('book.')) {
-                          
+                          // Get the extension of the file
                           const ext = path.extname(file);
-                          
+                          // Create the new name using the bookTitle and extension
                           const newFileName = `${bookData.bookMeta.bookTitle}${ext}`;
-                          
+                          // Create the source and destination file paths
                           const oldPath = path.join(sourceDir, file);
                           const newPath = path.join(destinationDir, newFileName);
-                          
+                          // Rename and move the file
                           fs.rename(oldPath, newPath, (err) => {
                               if (err) console.error("Error in moving the file", err);
                               else console.log(`Successfully moved ${file} to ${newPath}`);
@@ -1075,12 +1075,12 @@ const saveShit = async (bookData) => {
 
 
 
+//#endregion
 
-
-
-
+//////// ------ *** HELPERS *** ------ ////////
+//#region Helpers
 function cleanResponse(str) {
-  
+  // Matches patterns like 'Chapter 1', 'Title 5', 'Theme 2', 'Concept 3', 'Plot Summary 4', etc.
   let regex = new RegExp(/^(Chapter \d+\.?|Title \d+\.?|Theme \d+\.?|Concept \d+\.?|Plot Summary \d+\.?|\bChapter\b|\bTitle\b|\bTheme\b|\bConcept\b|\bPlot Summary\b)/i);
   return str.replace(regex, '').trim();
 };
@@ -1103,11 +1103,11 @@ const getCurrentLength = async (chapterIndex, themeIndex, conceptIndex, longPlot
   return currentLength;
 };
 const getLastParagraph = async (bookData, chapterIndex, themeIndex, conceptIndex, longPlotIndex, contentTitleIndex) => {
-    
+    // Get the last array in the contentParagraphs array
     const lastParagraphs = bookData.bookGenContent.contentParagraphs[chapterIndex][themeIndex][conceptIndex][longPlotIndex][contentTitleIndex];
     const lastParagraph = lastParagraphs[lastParagraphs.length - 1];
 
-    
+    //console.log('Last Paragraph:', lastParagraph);
     return lastParagraph;
 };
 const checkIfDone = async (bookData, currentLength) => {
@@ -1194,11 +1194,11 @@ const summarizeShit = async (chapterIndex, themeIndex, conceptIndex, longPlotInd
 
 };
 
+//#endregion
 
+/////// ------- *** PRE BOOK SHIT *** ------- ///////
 
-
-
-
+//#region Pre-Book Shiz
 
 const genBookInputs = async (bookData, schemas) => {
   console.log(chalk.yellow('\n\t🤖 ... Creating Simple Input Ideas →  '));
@@ -1231,7 +1231,7 @@ const setAuthor = async (bookData, author) => {
 
   const authorChoice = bookData.bookInit.authorChoice;
 
-  
+  // Object assign the full corresponding object to overwrite the existing author object based on the author choice
   if (authorChoice === 'Emily Jacket') {
     Object.assign(author, authorEmilyJacket);
   } else if (authorChoice === 'Sophia Quill') {
@@ -1533,7 +1533,7 @@ const genBookTitle = async (bookData, schemas) => {
 };
 const genBookTitleRecursive = async (bookData, schemas) => {
 
-  const lastOptions = bookData.bookTitle.titleResponseJSON 
+  const lastOptions = bookData.bookTitle.titleResponseJSON // the last options that were generated
   const longDem = bookData.audienceInfo.longDemo
   const demographic = 'Age:' + bookData.audienceInfo.age + ', Job:' + bookData.audienceInfo.job + ',Location:' + bookData.audienceInfo.location + ', Marital Status' + bookData.audienceInfo.maritial + ', Education:' + bookData.audienceInfo.education
   const demographicRead = 'Reading Level:' + bookData.audienceInfo.readLevel + ', Preferred Genre:' + bookData.audienceInfo.preferredGenre + ', Preferred Language:' + bookData.audienceInfo.preferredLanguage 
@@ -1630,10 +1630,10 @@ const preBookShit = async (bookData, schemas ) =>{
   await genBookPromptForAI (bookData, schemas)
   console.log('✅ Finished Pre-Book Functions\n');
 };
+//#endregion
 
-
-
-
+//////// ------ *** BOOK CONTENT GENERATORS *** ------ ////////
+//#region Generators
 const generateChapters = async (bookData, schemas) => {    
     
     console.log(chalk.yellowBright('\n\t🤖 ...Generating Chapter Outline →\n'));
@@ -1680,7 +1680,7 @@ const generateChapters = async (bookData, schemas) => {
       [
         {
           "name": "Generate_Chaptertitles_plotconcepts_chapterthemes",
-          "parameters": schemas.chapterOutlineSchema 
+          "parameters": schemas.chapterOutlineSchema // pass the apiParameters to the API call
         }
       ],
       { "name": "Generate_Chaptertitles_plotconcepts_chapterthemes" },
@@ -1689,19 +1689,19 @@ const generateChapters = async (bookData, schemas) => {
     );
     const response = JSON.parse(responseText);
 
- 
+ // Assuming response.chapterTitle is an array of chapter titles
     const numChaptersGen = response.chapterTitle.length;
 
-    
+    // Initialize a counter for total themes
     let numThemesTotalGen = 0;
 
-    
+    // Loop over each set of themes 
     for (let i = 0; i < response.chapterTheme.length; i++) {
-        
+        // If more than one theme per chapter, throw an error
         if (response.chapterTheme[i].length > 1) {
             console.log(chalk.red(`Error: More than one theme detected for chapter ${i + 1}. Rerunning function...`));
             await generateChapters(bookData, schemas);
-            return; 
+            return; // Return early to exit this function run, as we're rerunning it
         }
 
         numThemesTotalGen += response.chapterTheme[i].length;
@@ -1710,28 +1710,28 @@ const generateChapters = async (bookData, schemas) => {
     if (numThemesTotalGen !== numChaptersGen) {
       console.log(chalk.red('Error: The number of chapter themes does not match the number of chapters. Rerunning function...'));
       await generateChapters(bookData, schemas);
-      return; 
+      return; // Return early to exit this function run, as we're rerunning it
     } else {
       console.log(chalk.green('Success. Chapter Outline Generated.'));
     }
 
     
-    
-    
-    
+    // Insert an error handler right here after getting 'response' 
+    // to check if response.chapterThemes includes more than one theme per chapter.
+    // Initialize the first level (chapter index) of the arrays
     for (let i = 0; i < response.chapterTitle.length; i++) {
         bookData.bookGenContent.chapterTitle[i] = [''];
         bookData.bookGenContent.chapterTheme[i] = [];
     }
 
-    
+    // Initialize the second level (theme index) of the arrays
     for (let i = 0; i < response.chapterTheme.length; i++) {
         for (let j = 0; j < response.chapterTheme[i].length; j++) {
             bookData.bookGenContent.chapterTheme[i][j] = [''];
         }
     }
     
-    
+    // Clean every chapter title and theme
     bookData.bookGenContent.chapterTitle = response.chapterTitle.map(title => cleanResponse(title));
     bookData.bookGenContent.chapterTheme = response.chapterTheme.map(chapterThemes => {
         return chapterThemes.map(theme => cleanResponse(theme));
@@ -1819,7 +1819,7 @@ const generateShortPlotConcepts = async (chapterIndex, themeIndex, bookData, aut
       [
         {
           "name": "generateConcepts",
-          "parameters": schemas.shortPlotSummarySchema 
+          "parameters": schemas.shortPlotSummarySchema // pass the apiParameters to the API call
         }
       ],
       { "name": "generateConcepts" },
@@ -1881,7 +1881,7 @@ const generateLongPlotSummary = async (chapterIndex, themeIndex, conceptIndex, b
       [
         {
           "name": "generateConcepts",
-          "parameters": schemas.longPlotSummarySchema 
+          "parameters": schemas.longPlotSummarySchema // pass the apiParameters to the API call
         }
       ],
       { "name": "generateConcepts" },
@@ -1890,13 +1890,13 @@ const generateLongPlotSummary = async (chapterIndex, themeIndex, conceptIndex, b
     );
     const response = JSON.parse(responseText);
 
-  
+  // Check if the response contains more than one paragraph
   if (response.plotSummaryLong.length > 1) {
-        
+        // If so, re-run the function
     console.log("Response contains more than one paragraph. Redoing...");
     await generateLongPlotSummary(chapterIndex, themeIndex, conceptIndex, bookData, schemas);
   } else {
-    
+    // Otherwise, store the single paragraph
     bookData.bookGenContent.plotSummaryLong[chapterIndex][themeIndex][conceptIndex] = response.plotSummaryLong;
     console.log(chalk.green('Success. Long Plot Concept Generated.'));
     console.log(chalk.cyan(`---------------------------------------------------------------------------------------------------\n`));
@@ -1944,7 +1944,7 @@ const generateContentTitle = async (chapterIndex, themeIndex, conceptIndex, long
       [
         {
           "name": "generateConcepts",
-          "parameters": schemas.contentTitleSchema 
+          "parameters": schemas.contentTitleSchema // pass the apiParameters to the API call
         }
       ],
       { "name": "generateConcepts" },
@@ -2015,7 +2015,7 @@ const generateContentParagraphs = async (chapterIndex, themeIndex, conceptIndex,
       [
         {
           "name": "generateParagraphs",
-          "parameters": schemas.paragraphSchema 
+          "parameters": schemas.paragraphSchema // pass the apiParameters to the API call
         }
       ],
       { "name": "generateParagraphs" },
@@ -2024,31 +2024,31 @@ const generateContentParagraphs = async (chapterIndex, themeIndex, conceptIndex,
     );
     const response = JSON.parse(responseText);
     if (response.contentParagraphs && response.contentParagraphs.length > 0) {
-      
-      
+      // If the response contains paragraphs, add them to contentFinal
+      // Join the paragraphs into a single string
       let paragraphsString = response.contentParagraphs.join('\n');
   
-      
+      // Add the paragraphsString to contentFinal
       bookData.bookGenContent.contentFinal[chapterIndex][themeIndex][conceptIndex][longPlotIndex][contentTitleIndex] += response.contentParagraphs;
       bookData.bookNotes.contentParagraphsSummary[chapterIndex][themeIndex][conceptIndex][longPlotIndex][contentTitleIndex] = paragraphsString;
   
       const newParagraphs = response.contentParagraphs;
   
-      
+      // Push the new paragraphs to contentParagraphs
       const contentParagraphs = bookData.bookGenContent.contentParagraphs[chapterIndex][themeIndex][conceptIndex][longPlotIndex][contentTitleIndex];
       contentParagraphs.push(...newParagraphs);
     } else {
-      
+      // If the response does not contain paragraphs, re-run the function
       console.log(chalk.red("Response does not contain paragraphs. Redoing..."));
       await generateContentParagraphs(chapterIndex, themeIndex, conceptIndex, longPlotIndex, contentTitleIndex, bookData, schemas);
     }
 
-    
+    //console.log(chalk.red('\n\n\nContentFinal:', bookData.bookGenContent.contentFinal[chapterIndex][themeIndex][conceptIndex][longPlotIndex][contentTitleIndex],'\n\n'));
 
-    
+    //console.log(chalk.red('\n\n\nContentParagraphs:', bookData.bookGenContent.contentParagraphs[chapterIndex][themeIndex][conceptIndex][longPlotIndex][contentTitleIndex],'\n\n'));
 
 
-    
+    // update current length
 
     currentLength = await getCurrentLength(chapterIndex, themeIndex, conceptIndex, longPlotIndex, contentTitleIndex,  bookData,);
     console.log(chalk.dim('Current Length:', currentLength));
@@ -2067,7 +2067,7 @@ const generateContentParagraphs = async (chapterIndex, themeIndex, conceptIndex,
   }
 
 
-  
+  // if not done, call this function again
   console.log('Recursing to generate more paragraphs.');
   return await generateContentParagraphsRecursive(chapterIndex, themeIndex, conceptIndex, longPlotIndex, contentTitleIndex, bookData, schemas);
      
@@ -2120,7 +2120,7 @@ const generateContentParagraphsRecursive = async (chapterIndex, themeIndex, conc
       [
         {
           "name": "generateParagraphs",
-          "parameters": schemas.paragraphSchema 
+          "parameters": schemas.paragraphSchema // pass the apiParameters to the API call
         }
       ],
       { "name": "generateParagraphs" },
@@ -2130,18 +2130,18 @@ const generateContentParagraphsRecursive = async (chapterIndex, themeIndex, conc
     const response = JSON.parse(responseText);
     let paragraphsString = response.contentParagraphs.join('\n');
     
-    
+    // Add the paragraphsString to contentFinal
     bookData.bookGenContent.contentFinal[chapterIndex][themeIndex][conceptIndex][longPlotIndex][contentTitleIndex] += paragraphsString;
   
     const newParagraphs = response.contentParagraphs;
   
-    
+    // Push the new paragraphs to contentParagraphs
     const contentParagraphs = bookData.bookGenContent.contentParagraphs[chapterIndex][themeIndex][conceptIndex][longPlotIndex][contentTitleIndex];
     contentParagraphs.push(...newParagraphs);
     console.log(chalk.red('\n\n\nParagraphs:', bookData.bookGenContent.contentParagraphs[chapterIndex][themeIndex][conceptIndex][longPlotIndex][contentTitleIndex],'\n\n'));
 
 
-    
+    // update current length
 
     currentLength = await getCurrentLength(chapterIndex, themeIndex, conceptIndex, longPlotIndex, contentTitleIndex,  bookData,);
 
@@ -2160,12 +2160,12 @@ const generateContentParagraphsRecursive = async (chapterIndex, themeIndex, conc
     console.log(chalk.cyan(`---------------------------------------------------------------------------------------------------\n`));
     return;
   }
-  
+  // if not done, call this function again
   console.log('Recursing to generate more paragraphs.');
   return await generateContentParagraphsRecursive(chapterIndex, themeIndex, conceptIndex, longPlotIndex, contentTitleIndex, bookData, schemas);
 };
 const generateBookContent = async (bookData, author, schemas) => {
-   
+   // Initialize the bookGenContent object at the top level
     bookData.bookGenContent.plotSummaryShort = [];
     bookData.bookGenContent.plotSummaryLong = [];
     bookData.bookGenContent.contentTitle = []
@@ -2239,7 +2239,7 @@ const generateBookContent = async (bookData, author, schemas) => {
                         bookData.bookNotes.lastGenSummary[chapterIndex][themeIndex][conceptIndex][longPlotIndex][contentTitleIndex] = [''];
 
                         await generateContentParagraphs(chapterIndex, themeIndex, conceptIndex, longPlotIndex, contentTitleIndex, bookData, schemas);
-                        
+                        //console.log (JSON.stringify(bookData.bookGenContent, null, 2));
 
                     }
 
@@ -2251,13 +2251,13 @@ const generateBookContent = async (bookData, author, schemas) => {
 
   await formatBookContent(bookData);
   console.log(JSON.stringify(bookData.bookGenContent, null, 2)); 
-  
+  //await exportToCSV(bookData);
 };
+//#endregion
+/////// -------- *** DESIGN *** --------- ///////
 
-
-
-
-
+// ------------------ Image Generation Functions ------------------ ///
+//#region
 const genCoverImgPrompt = async (bookData, schemas) => {
   const title = bookData.bookMeta.bookTitle;
   const subtitle = bookData.bookMeta.bookSubtitle;
@@ -2362,7 +2362,7 @@ const genCoverDetails = async (bookData, schemas) => {
       3700
     );
 
-    
+    // Parsing the response and updating bookData
     const response = JSON.parse(responseText);
     console.log (responseText)
 
@@ -2373,7 +2373,7 @@ const genCoverDetails = async (bookData, schemas) => {
     if (!fontsExist) {
       console.log(`Font files for '${mainFont}' and '${secondaryFont}' do not exist. Retrying...`);
     } else {
-      
+      // Font files exist, update bookData and exit the loop
       bookData.bookCoverDesign.primaryColour = response.primaryColour;
       bookData.bookCoverDesign.primaryColourName = response.primaryColourName;
       bookData.bookCoverDesign.primaryCompColour = response.primaryCompColour;
@@ -2405,7 +2405,7 @@ const genCoverDetails = async (bookData, schemas) => {
     }
   }
 };
-
+// generate more specific prompts for each piece of content
 const downloadImage = async (url, dest) => {
   try {
     const response = await fetch(url);
@@ -2424,13 +2424,13 @@ const downloadImage = async (url, dest) => {
   }
 };
 const genCoverMJ = async (bookData) => {
-  
+  // Create directory if not exist
   const dir = path.join(`./export/${bookData.bookMeta.bookTitle}/img/`);
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
 
-  
+  // Initialize client
   const client = new Midjourney({
     ServerId: process.env.SERVER_ID,
     ChannelId: process.env.CHANNEL_ID,
@@ -2438,18 +2438,18 @@ const genCoverMJ = async (bookData) => {
     Ws: true,
   });
 
-  
+  // Connect to client
   await client.Connect();
 
-  
+  // Define variables
   const prompt = `${bookData.bookCoverIMGPrompt.imageStyle}` + ' of ' + `${bookData.bookCoverIMGPrompt.imageSubject}` + ' ' + `${bookData.bookCoverIMGPrompt.imageSubjectAction}` + `${bookData.bookCoverIMGPrompt.imageSubjectLocation}` + ', feeling ' + `${bookData.bookCoverIMGPrompt.imageSubjectEmotion}` + `, ` + `${bookData.bookCoverIMGPrompt.imageLighting}` + ` , ` + `${bookData.bookCoverIMGPrompt.imageColour}` + `, ` + `${bookData.bookCoverIMGPrompt.imageComposition}` + `, ` + `${bookData.bookCoverIMGPrompt.imageDescription}` + ', primary colour theme of ' + `${bookData.bookCoverDesign.primaryCompColourName}` + ', solid background, solid shapes, graphic design vector,';
   const ratio = "2:3";
   const mjModel = "5";
 
-  
+  // Log prompt
   console.log("Prompt Sending to Midjourney: " + prompt);
 
-  
+  // Use variables in Imagine function
   const Imagine = await client.Imagine(
     `${prompt}, --ar ${ratio} --v ${mjModel}`,
     (uri, progress) => {
@@ -2457,19 +2457,19 @@ const genCoverMJ = async (bookData) => {
     }
   );
 
-  
+  // Log Imagine
   console.log(Imagine);
 
-  
+  // Check if Imagine exists
   if (!Imagine) {
     console.log("no message");
     return;
   }
 
-  
+  // Define indices
   const indices = [1];
 
-  
+  // Loop through indices
   for (let i = 0; i < indices.length; i++) {
     const Upscale = await client.Upscale({
       index: indices[i],
@@ -2481,20 +2481,20 @@ const genCoverMJ = async (bookData) => {
       },
     });
 
-    
+    // Log Upscale
     console.log(Upscale);
 
-    
+    // Download image and save in directory
 
-      
-      
+      // Get current date and time
+      // Construct file name
       const fileName = `${bookData.bookMeta.bookTitle}-img-${ratio}-Small-mj.png`;
       const imagePath = path.join(dir, fileName);
       await downloadImage(Upscale.proxy_url, imagePath);
     
   }
 
-  
+  // Close client
   client.Close();
 };
 async function upscaleCover(bookData) {
@@ -2507,16 +2507,16 @@ async function upscaleCover(bookData) {
   const modelVersion = "nightmareai/real-esrgan:42fed1c4974146d4d2414e2be2c5277c7fcf05fcc3a73abf41610695738c1d7b";
 
   const imagePath = `./export/${bookData.bookMeta.bookTitle}/img/${bookData.bookMeta.bookTitle}-img-2:3-Small-mj.png`;
-  const mimeType = 'image/png'; 
+  const mimeType = 'image/png'; // Adjust this depending on your image format
 
   try {
 
-    
+    // Read the image file, convert to base64, and prepend with appropriate header
     const imageBuffer = fs.readFileSync(imagePath);
     const base64 = imageBuffer.toString('base64');
     const dataURI = `data:${mimeType};base64,${base64}`;
 
-    
+    // Run the model
     const output = await replicate.run(modelVersion, {
       input: {
         image: dataURI,
@@ -2524,19 +2524,19 @@ async function upscaleCover(bookData) {
     });
     console.log('Output:', output);
 
-    
+    // Model's output is an array of URLs. Here, we're only handling the first output.
     const outputUrl = output;
     console.log('Output URL:', outputUrl);
 
-    
+    // Download the output file
     const response = await fetch(outputUrl);
     const resultBuffer = await response.buffer();
 
-    
+    // Create target directory if it doesn't exist
     const targetDirectory = path.join('.', 'export', bookData.bookMeta.bookTitle, 'img');
     fs.mkdirSync(targetDirectory, { recursive: true });
 
-    
+    // Save the file locally
     const targetPath = path.join(targetDirectory, `${bookData.bookMeta.bookTitle}-UPSCALED-6x9.png`);
     fs.writeFileSync(targetPath, resultBuffer);
     console.log(chalk.green('Success. Image Upscaled.'))
@@ -2548,10 +2548,10 @@ async function upscaleCover(bookData) {
 }
 
 
+//#endregion
+/// ---- HTML CANVAS AND DESIGN FUNCTIONS ---- ///
 
-
-
-
+//#region 
 
 const longestWordLength = (str) => {
   return str.split(' ')
@@ -2581,26 +2581,26 @@ const canvasFrontCover = async (bookData, author) => {
     return;
   }
 
-  
+  // Register the fonts
   await registerFont(titleFontPath, { family: titleFont });
   await registerFont(subtitleFontPath, { family: subtitleFont });
 
-  
-  
+  //BG Image 
+  //#region
 
 
 console.log('Setting boundaries and typography...');
 
 const image = await loadImage(bgImagePath);
 
-
+// Load the texture image
 const textureImagePath = './templates/textures/rough.jpg';
 const textureImage = await loadImage(textureImagePath);
 
 const canvas = createCanvas(3000, 4500);
 const context = canvas.getContext('2d');
 
-
+// Draw the background image scaled to fit the canvas
 console.log('Drawing background image...');
 const scale = Math.min(canvas.width / image.width, canvas.height / image.height);
 const newWidth = image.width * scale;
@@ -2611,56 +2611,56 @@ context.drawImage(image, xPositionImage, yPositionImage, newWidth, newHeight);
 
 console.log('Applying texture...');
 
-
+// Save the current globalCompositeOperation
 const prevGlobalCompositeOperation = context.globalCompositeOperation;
 
-
+// Set the blend mode to 'overlay'
 context.globalCompositeOperation = 'multiply';
 
-
+// Opacity of Texture
 const prevGlobalAlpha = context.globalAlpha;
 context.globalAlpha = 0.5;
 
-
+// Draw the texture image over the entire canvas
 console.log('Drawing texture image...');
 context.drawImage(textureImage, 0, 0, canvas.width, canvas.height);
 
-
+// Restore the previous globalCompositeOperation and globalAlpha
 context.globalCompositeOperation = prevGlobalCompositeOperation;
 context.globalAlpha = prevGlobalAlpha;
 
-
+//#endregion
 
 
   
-
-
+// MAIN TITLE 
+//#region
 const title = bookData.bookMeta.bookTitle;
 const longestWordLen = longestWordLength(title);
-const fontSizeTitle = (longestWordLen <= 3) ? 400 : 350; 
+const fontSizeTitle = (longestWordLen <= 3) ? 400 : 350; // Adjust font size as needed
 
 context.textAlign = 'center';
 context.font = `${fontSizeTitle}px "${titleFont}"`;
 context.fillStyle = bookData.bookCoverDesign.primaryColour;
-const lineHeightTitle = fontSizeTitle + 20; 
+const lineHeightTitle = fontSizeTitle + 20; // Adjust line height as needed
 
-
+// Capitalize the entire title
 const titleCap = title.toUpperCase();
 
-
+// Split the title into words
 const wordsTitle = titleCap.split(' ');
 
-
+// Calculate the total number of lines and the spacing between lines
 const totalLines = wordsTitle.length;
 const midLines = totalLines / 2;
 const lineSpacing = lineHeightTitle;
 const midLinesSpace = midLines * lineSpacing;
-const TITLE_MARGIN_LEFT = 500; 
-const TITLE_MARGIN_RIGHT = 400; 
+const TITLE_MARGIN_LEFT = 500; // Adjust margin as needed
+const TITLE_MARGIN_RIGHT = 400; // Adjust margin as needed
 
-let yPositionTitle = canvas.height / 3 - midLinesSpace; 
+let yPositionTitle = canvas.height / 3 - midLinesSpace; // Updated yPositionTitle calculation
 
-
+// Function to check if there is enough margin above the title
 const hasEnoughMarginAboveTitle = (yPosition) => {
 const minMarginAboveTitle = 500;
 return yPosition >= minMarginAboveTitle;
@@ -2671,63 +2671,63 @@ for (let i = 1; i < wordsTitle.length; i++) {
 let word = wordsTitle[i];
 let prevWord = wordsTitle[i - 1];
 if (word.length <= 3 && prevWord.length <= 3 && (currentLine + ' ' + word).length <= 24) {
-  currentLine += ' ' + word; 
+  currentLine += ' ' + word; // Add this short filler word to the current line
 } else {
-  let xPosition = canvas.width / 2; 
+  let xPosition = canvas.width / 2; // Updated xPosition calculation
 
-  
+  // Check if there's enough margin above the title for the current line
   if (hasEnoughMarginAboveTitle(yPositionTitle)) {
     context.fillText(currentLine, xPosition, yPositionTitle);
   } else {
-    
+    // Shift down the title until the margin requirement is met
     while (!hasEnoughMarginAboveTitle(yPositionTitle)) {
-      yPositionTitle += 10; 
+      yPositionTitle += 10; // You can adjust this value as needed for the desired margin increment
     }
     context.fillText(currentLine, xPosition, yPositionTitle);
   }
 
-  yPositionTitle += lineHeightTitle; 
-  currentLine = word; 
+  yPositionTitle += lineHeightTitle; // Move to the next line
+  currentLine = word; // Start a new line with the current word
 }
 
-
+// If we are at the end of the title, print the line
 if (i === wordsTitle.length - 1) {
-  let xPosition = canvas.width / 2; 
+  let xPosition = canvas.width / 2; // Updated xPosition calculation
 
-  
+  // Check if there's enough margin above the title for the last line
   if (hasEnoughMarginAboveTitle(yPositionTitle)) {
     context.fillText(currentLine, xPosition, yPositionTitle);
   } else {
-    
+    // Shift down the title until the margin requirement is met
     while (!hasEnoughMarginAboveTitle(yPositionTitle)) {
-      yPositionTitle += 10; 
+      yPositionTitle += 10; // You can adjust this value as needed for the desired margin increment
     }
     context.fillText(currentLine, xPosition, yPositionTitle);
   }
 }
 }
+//#endregion
 
-
-
-
+// Subtitle
+//#region
 const boxHeight = 400;
 const marginBottom = 900;
-const boxOpacity = 0.5; 
-const subtitleTextMarginLeft = 300; 
-const subtitleTextMarginRight = 300; 
+const boxOpacity = 0.5; // Adjust between 0 (fully transparent) and 1 (fully opaque).
+const subtitleTextMarginLeft = 300; // Margin to the left for the subtitle text
+const subtitleTextMarginRight = 300; // Margin to the right for the subtitle text
 
 context.globalAlpha = boxOpacity;
 
-
-context.shadowColor = 'rgba(0, 0, 0, 0.5)';  
-context.shadowBlur = 20;  
-context.shadowOffsetX = 5;  
-context.shadowOffsetY = 5;  
+//Add drop shadow
+context.shadowColor = 'rgba(0, 0, 0, 0.5)';  // Adjust color and alpha as desired
+context.shadowBlur = 20;  // Adjust blur radius as desired
+context.shadowOffsetX = 5;  // Adjust horizontal offset as desired
+context.shadowOffsetY = 5;  // Adjust vertical offset as desired
 
 context.fillStyle = bookData.bookCoverDesign.secondaryCompColour;
 context.fillRect(0, canvas.height - boxHeight - marginBottom, canvas.width, boxHeight);
 
-
+// Important: Reset alpha and remove shadow for subsequent drawing
 context.globalAlpha = 1;
 context.shadowColor = null;
 context.shadowBlur = null;
@@ -2742,71 +2742,71 @@ context.font = `${fontSizeSubtitle}px "${subtitleFont}"`;
 context.fillStyle = subtitleFontColour;
 const verticalMidPoint = canvas.height - boxHeight - marginBottom + (boxHeight / 2) + (fontSizeSubtitle / 4);
 
-
+// Check if the text width is too large for the canvas
 let textMetrics = context.measureText(subtitle);
 while (textMetrics.width > canvas.width - subtitleTextMarginLeft - subtitleTextMarginRight) {
-  fontSizeSubtitle -= 3; 
-  context.font = `${fontSizeSubtitle}px "${subtitleFont}"`; 
-  textMetrics = context.measureText(subtitle); 
+  fontSizeSubtitle -= 3; // Reduce the font size
+  context.font = `${fontSizeSubtitle}px "${subtitleFont}"`; // Set the new font size
+  textMetrics = context.measureText(subtitle); // Measure the new text width
 }
 
 context.fillText(subtitle, canvas.width / 2, verticalMidPoint, canvas.width);
+//#endregion
 
 
 
-
-
-
-const fontSizeAuthor = 350; 
+// Author
+//#region 
+const fontSizeAuthor = 350; // Adjust the value as needed
 const authorName = bookData.bookMeta.author; 
 
 console.log('Setting author...');
-context.font = `${fontSizeAuthor}px "${subtitleFont}"`; 
+context.font = `${fontSizeAuthor}px "${subtitleFont}"`; // Use the separate fontSizeAuthor variable
 const authorColour = bookData.bookCoverDesign.secondaryColour;
 context.fillStyle = authorColour;
 
-
-
+// Calculate the y-position for the author by finding the midpoint 
+// between the bottom of the title section and the top of the box.
 let yPositionAuthor = (canvas.height - boxHeight - marginBottom - yPositionTitle) / 2 + yPositionTitle;
 
-
+// Center the author
 let xPositionAuthor = (canvas.width - TITLE_MARGIN_LEFT - TITLE_MARGIN_RIGHT) / 2 + TITLE_MARGIN_LEFT;
 context.fillText(authorName, xPositionAuthor, yPositionAuthor);
-
+//#endregion
+  // Logo 
+//#region
   
-
-  
-
+// Price logo path based on bookData.bookCoverDesign.logoTheme
 let pngLogoPath;
 if (bookData.bookCoverDesign.logoTheme === 'light') {
   pngLogoPath = path.join(process.cwd(), 'templates', 'logos', 'logo-light.png');
-} else { 
+} else { // 'dark' or any other value default to 'logo-dark.png'
   pngLogoPath = path.join(process.cwd(), 'templates', 'logos', 'logo-dark.png');
 }
 
-
+// Load the PNG logo file
 const pngLogo = await loadImage(pngLogoPath);
 
+// Define the relative size of the logo (in percentage)
+const logoSizePercentage = 150; // Adjust this value as needed (e.g., 50% of the original size)
 
-const logoSizePercentage = 150; 
+// Define the bottom margin (in pixels)
+const bottomMarginPixels = 100; // Adjust this value as needed
 
-
-const bottomMarginPixels = 100; 
-
-
+// Calculate the new dimensions of the logo based on the percentage
 const newLogoWidth = pngLogo.width * (logoSizePercentage / 100);
 const newLogoHeight = pngLogo.height * (logoSizePercentage / 100);
 
-
+// Calculate the position to center the logo at the bottom of the canvas with the bottom margin
 const logoPositionX = (canvas.width - newLogoWidth) / 2;
 const logoPositionY = canvas.height - newLogoHeight - bottomMarginPixels;
 
-
+// Draw the PNG logo with the calculated dimensions and position
 context.drawImage(pngLogo, logoPositionX, logoPositionY, newLogoWidth, newLogoHeight);
+//#endregion
 
 
-
-  
+  // Save the canvas with the added logo as an image file
   const outputFilePath = `./export/${bookData.bookMeta.bookTitle}/img/COVER-6x9-${bookData.bookMeta.bookTitle}.jpg`;
   const buffer = canvas.toBuffer('image/jpeg');
   fs.writeFileSync(outputFilePath, buffer);
@@ -2822,9 +2822,9 @@ const createFrontCover =  async (bookData, schemas ) => {
   await upscaleCover(bookData);
   await canvasFrontCover(bookData);
 };
-
-
-
+//#endregion
+/// ---- Send To Amazon  Send To WP---- ///
+//#region
 const sendToAmazon = async(bookData, author) => {
   const browser = await puppeteer.launch({
     headless: false,
@@ -2850,24 +2850,24 @@ const sendToAmazon = async(bookData, author) => {
 
 
 
-  
+  // ! Import cookies
   const cookiesString = await fsp.readFile("./src/kdpcookies.json", "utf-8");
   const cookies = JSON.parse(cookiesString);
   await page.setCookie(...cookies);
   await page.setDefaultTimeout(0);
 
-  
-  await page.goto("https:" + "//kdp.amazon.com/en_US/title-setup/paperback/new/details");
+  // ! Go to kdp dashboard
+  await page.goto("https://kdp.amazon.com/en_US/title-setup/paperback/new/details?ref_=kdp_BS_D_cr_ti");
   await page.waitForTimeout(randomInt(1298, 1419));
 
-  
+  // ! Title
   await page.click("#data-print-book-title");
   randomInt(1298, 2419);
   await page.type("#data-print-book-title", bookTitle, {
     delay: 120,
   });
 
-  
+  // ! Subtitle
   randomInt(1298, 1419);
   await page.click("#data-print-book-subtitle");
   randomInt(298, 419);
@@ -2875,7 +2875,7 @@ const sendToAmazon = async(bookData, author) => {
     delay: 120,
   });
 
-  
+  // ! First name
   randomInt(298, 519);
   await page.click("#data-print-book-primary-author-first-name", authorFirstName);
   randomInt(28, 191);
@@ -2885,7 +2885,7 @@ const sendToAmazon = async(bookData, author) => {
     { delay: 120 }
   );
 
-  
+  // ! Last name
   randomInt(298, 419);
   await page.click("#data-print-book-primary-author-last-name", authorLastName);
 
@@ -2898,7 +2898,7 @@ const sendToAmazon = async(bookData, author) => {
     }
   );
 
-  
+  // ! Description
   randomInt(118, 719);
   await page.click("#data-print-book-description");
   randomInt(192, 619);
@@ -2906,67 +2906,67 @@ const sendToAmazon = async(bookData, author) => {
     delay: 120,
   });
 
-  
+  // ! Select no public domain
   await page.waitFor(randomInt(1298, 8419));
   await page.click("#non-public-domain", {
     delay: 25,
   });
 
-  
+  // !  SUBTITLE 1
   await page.waitFor(randomInt(2000, 3555));
   await page.click("#data-print-book-keywords-0");
   await page.type("#data-print-book-keywords-0", "HY I'M A SUBTITLE 1", {
     delay: randomInt(150, 250),
   });
 
-  
+  // !  SUBTITLE 2
   await page.waitFor(randomInt(2000, 3555));
   await page.click("#data-print-book-keywords-1");
   await page.type("#data-print-book-keywords-1", "HY I'M A SUBTITLE 2", {
     delay: randomInt(150, 250),
   });
 
-  
+  // !  SUBTITLE 3
   await page.waitFor(randomInt(2000, 3555));
   await page.click("#data-print-book-keywords-2");
   await page.type("#data-print-book-keywords-2", "HY I'M A SUBTITLE 3", {
     delay: randomInt(150, 250),
   });
 
-  
+  // !  SUBTITLE 4
   await page.waitFor(randomInt(2000, 3555));
   await page.click("#data-print-book-keywords-3");
   await page.type("#data-print-book-keywords-3", "HY I'M A SUBTITLE 4", {
     delay: randomInt(150, 250),
   });
 
-  
+  // !  SUBTITLE 5
   await page.waitFor(randomInt(2000, 3555));
   await page.click("#data-print-book-keywords-4");
   await page.type("#data-print-book-keywords-4", "HY I'M A SUBTITLE 5", {
     delay: randomInt(150, 250),
   });
 
-  
+  // !  SUBTITLE 6
   await page.waitFor(randomInt(2000, 3555));
   await page.click("#data-print-book-keywords-5");
   await page.type("#data-print-book-keywords-5", "HY I'M A SUBTITLE 6", {
     delay: randomInt(150, 250),
   });
 
-  
+  // !  SUBTITLE 7
   await page.waitFor(randomInt(2000, 3555));
   await page.click("#data-print-book-keywords-6");
   await page.type("#data-print-book-keywords-6", "HY I'M A SUBTITLE 7", {
     delay: randomInt(150, 250),
   });
 
-  
+  // ! Categories
   await page.click("#data-print-book-categories-button-proto-announce");
   await page.waitFor(5000);
   await page.waitFor(randomInt(5000, 5222));
 
-  
+  // ! Expand all links
   await page.$$eval("#category-chooser-popover .a-link-normal", (links) =>
     links.forEach((link) => link.click())
   );
@@ -2975,28 +2975,28 @@ const sendToAmazon = async(bookData, author) => {
   await page.click("#unsaved-changes-cancel-announce");
   await page.waitFor(25000);
 
-  
+  // ! Select the excact categories
   await page.$$eval(".a-label", (links) =>
     links.forEach((el) => {
       el.textContent === "Global Warming & Climate Change" ? el.click() : true;
       el.textContent === "Meteorology & Climatology" ? el.click() : true;
     })
   );
-  
+  // * Click save
   await page.waitFor(5000);
   await page.$$eval(".a-button-input", (elements) => elements[4].click());
 
-  
+  // ! Adult RadioButton
   await page.waitFor(randomInt(2000, 3000));
   await page.$$eval(".jele-override-input-width-radio input", (elements) =>
     elements[0].click()
   );
 
-  
+  // ! Save first page and continue
   await page.waitFor(randomInt(2000, 3000));
   await page.click("#save-and-continue-announce");
 
-  
+  // ! Get Free ISBN
   await page
     .waitForFunction(
       "document.querySelector('#free-print-isbn-btn-announce') && document.querySelector('#free-print-isbn-btn-announce').clientHeight != 0"
@@ -3007,26 +3007,26 @@ const sendToAmazon = async(bookData, author) => {
   await page.click("#print-isbn-confirm-button-announce");
   await page.waitFor(randomInt(4000, 5000));
 
-  
+  // ! Upload Interior
   const inputUploadHandle = await page.$(
     "#data-print-book-publisher-interior-file-upload-AjaxInput"
   );
   let fileToUpload = `./export/${bookData.bookMeta.bookTitle}/files/${bookData.bookMeta.bookTitle}.pdf`;
   inputUploadHandle.uploadFile(fileToUpload);
 
-  
+  // ! Check if interior uploading is started
   await page
-    .waitForXPath("")
+    .waitForXPath("//*[@class='success-header' and contains(., 'inside.pdf')]")
     .then((res) => console.log("Upload your interior process is started ✅"));
 
-  
+  // ! Check if interior processing is started
   await page
     .waitForXPath(
-      "",
+      "//*[@id='data-print-book-publisher-interior-file-upload-success' and contains(., 'Processing your file...')]"
     )
     .then((res) => console.log("Processing your interior is started... ✅"));
 
-  
+  // ! Check if interior processing is finished
   await page
     .waitForFunction(
       () =>
@@ -3037,7 +3037,7 @@ const sendToAmazon = async(bookData, author) => {
     .then((res) => console.log("your interior processing is finished ✅"));
   await page.waitFor(randomInt(2512, 3211));
 
-  
+  // ! Upload Cover
   await page
     .$$eval(
       "#data-print-book-publisher-cover-choice-accordion > div.a-box.a-last > div > div.a-accordion-row-a11y > a > i",
@@ -3050,14 +3050,14 @@ const sendToAmazon = async(bookData, author) => {
   let coverFile = "./pdf/cover.pdf";
   CoverUploadHandle.uploadFile(coverFile);
 
-  
+  // ! Check if interior processing is started
   await page
     .waitForXPath(
-      "",
+      "//*[@id='data-print-book-publisher-cover-file-upload-success' and contains(., 'Processing your file...')]"
     )
     .then((res) => console.log("Processing your cover is started... ✅"));
 
-  
+  // ! Check if interior processing is finished
   await page
     .waitForFunction(
       () =>
@@ -3068,7 +3068,7 @@ const sendToAmazon = async(bookData, author) => {
     .then((res) => console.log("Your cover processing is finished 😎"));
   await page.waitFor(randomInt(5900, 6211));
 
-  
+  // ! Click Preview
   await page
     .click("#print-preview-noconfirm-announce")
     .then((res) => console.log("Click Preview"));
@@ -3078,12 +3078,12 @@ const sendToAmazon = async(bookData, author) => {
 
   await page.waitFor(randomInt(5500, 6500));
 
-  
+  // ! Click Save
   await page
     .click(" #printpreview_approve_button_enabled a")
     .then((res) => console.log("Click Save"));
 
-  
+  // ! Go to third page
   await page
     .waitForFunction(
       "document.querySelector('#save-and-continue-announce') && document.querySelector('#save-and-continue-announce').clientHeight != 0"
@@ -3094,7 +3094,7 @@ const sendToAmazon = async(bookData, author) => {
     .click("#save-and-continue-announce")
     .then((res) => console.log("Going to third page "));
 
-  
+  // ! Type a Price
   await page
     .waitForFunction(
       "document.querySelector('#data-pricing-print-us-price-input > input') && document.querySelector('#data-pricing-print-us-price-input > input').clientHeight != 0"
@@ -3111,10 +3111,10 @@ const sendToAmazon = async(bookData, author) => {
   });
   await page.waitFor(5000);
 
-  
+  // ! Click Expanded Distribution
   await page.click("#data-pricing-print label > i");
 
-  
+  // ! Click save to draft
   await page.waitFor(2000);
   await page.click("#save-announce");
 
@@ -3125,31 +3125,31 @@ const sendToAmazon = async(bookData, author) => {
       )
     )
     .then((res) => console.log("Prices are okay!"));
-  
+  //
 };
-
-
+//#endregion
+//#region Main Function Call
 const makeBook = async (bookData, author, schemas) => {
   await preBookShit(bookData, schemas);
   await generateBookContent(bookData, author, schemas);
   await createFrontCover(bookData, schemas);
   await saveShit(bookData);
-  
+  //await sendToAmazon(bookData);
 
 
   console.log(chalk.green('Success. Book Generated. You have created a book called: ' + bookData.bookMeta.bookTitle + '.' + bookData.bookMeta.bookSubtitle));
 
-  
+  //console.log (JSON.stringify(bookData.bookGenContent, null, 2));
 };
 
 makeBook(bookData, author, schemas);
 
 
+//#endregion
 
 
 
 
 
-
-
-
+//## TODO
+// 
