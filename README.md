@@ -1,67 +1,75 @@
-# Wisewriter V3
-A linear process of book ideation, audience research, book development, art development, and then package into an Epub, Docx, and PDF
+# Wisewriter V3 Process
 
-# Book Ideation
-The intent of this phase is to generate variance yet consistency with the LLM. We will use book ideation
+The Wisewriter V3 Process is a book creation approach that automates pre-product ideation, product launch, and post-product activities. It uses tools such as OpenAI, Replica, Midjourney, and CanvasHTML to automate various stages in the creation and launch of books. Below is a detailed breakdown of the Wisewriter V3 process.
 
-## Audience Research 
-A simple OpenAI function to develop a reader demographic 
+## Book Ideation
+- Generate a variety of book concepts while ensuring cohesiveness.
 
-## Marketing Demographic 
-Takes the audience information and returns similar books, eithors etc
+### Audience Research
+- Utilize OpenAI functions to develop detailed reader demographic profiles.
 
-## Book Details 
-The AI chooses from a list of pre defined authors which will determine the write style of the book. Edit the Author object for different selections. 
+### Marketing Demographic
+- Analyze audience data to identify comparable books and authors.
 
-## Book Title Creation 
-Generates a list then recursively chooses the best one and if there isnt a good title, run again. 
+### Book Details
+- Select writing styles by assigning authors from a predefined list.
 
-# Book Content Generatetion 
+### Book Title Creation
+- Generate multiple title options, iteratively refining the selection process.
 
-## Chapter Outline
-Generates a number of chapters (as chosen in the bookInputs) in an array and a chapter theme for each chapter. 
+## Book Content Generation
+- Develop the book's content using a structured methodology.
 
-## Small Plot Summary Genertion 
-Then generates a number of chosen small plot summaries for each chapter in a 2d Array. 
+### Chapter Outline
+- Create an array of chapters, each with a designated theme.
 
-## Long Plot Summary Generation
-Then generates a long paragraph of the story in a linear easy to follow format from lest to right. on the 3d array. 
+### Small Plot Summary Generation
+- Craft concise plot summaries for individual chapters.
 
-## Chapter Title Creation 
-Then generates a number of titles in an array on the 4th level. 
+### Long Plot Summary Generation
+- Construct a comprehensive linear story overview using a 3D array.
 
-## Content Generation 
-Looks at the desired input for the content length, then depending on how far into the story we write, we ask the AI to generate between 1-8 paragraphs. We check the length, and if its not at the desired length then we sent that response to the AI to summarize into a single paragraph and ask the AI where in the story we should go next, and then send a recursive call to the AI with the long Plot Summary (as a map), the current summary of ebverything we just wrote, and the last paragraph we wrote and the insutrrctions for the next part of the story, then join it into a single string. 
+### Chapter Title Creation
+- Generate chapter titles and organize them systematically.
 
-# Book Cover Creation 
+### Content Generation
+- Employ AI to generate 1-8 paragraphs based on desired content length.
+- Summarize and prompt AI for story direction when required.
+- Iteratively build the story using AI-generated content.
 
-## Cover Design Detail 
-We use Open AI to generate a number of design details, including which combination of google font we should use, we then download those google fonts and place them in a folder. We also ask for colour palletes for this book. 
+## Book Cover Creation
+- Design an engaging cover for the book.
 
-## Book Cover PRompt Generation 
-We ask the AI to to generate a number of image prompts based on certain parameters of the book. 
+### Cover Design Detail
+- Generate design specifics, including font selections and color palettes.
 
-## Cover Image Generation 
-We then use a discord bot to send a request to our discord server to speak to the midourney bot. Once the image is genersted, we then upscale it and then download. 
+### Book Cover Prompt Generation
+- Obtain image prompts from AI based on specific book parameters.
 
-## Upscale using REAL-esrgan
-Upscale the image to a large 300 ppi style image. 
+### Cover Image Generation
+- Request images via a Discord bot, upscale them, and finalize the design.
 
-## Create cover using HTML Canvas
-We then take the upscaled image, and the fonts, and the 'style' (pre-defined templates), and put it together. There are a number of steps here to ensure that whatever title we choose does not overflow the cover, and that aesthically it looks good. 
+### Upscale using REAL-esrgan
+- Enhance image quality for optimal presentation.
 
-# Book Creation 
+### Create cover using HTML Canvas
+- Combine elements like the upscaled image, fonts, and style templates.
+- Ensure aesthetically pleasing design with appropriate title placement.
 
-## Create Epub, DOCX, & PDF
-We format the book, and take the generated image to a final epub book. 
+## Book Creation
+- Format the book in various formats for distribution.
 
-# Book Sale 
+### Create Epub, DOCX, & PDF
+- Compile book content into final epub, docx, and pdf formats.
 
-## Upload to Amazon
-Using Pupeteer we then upload the new ebook to amazon and set it as a draft for us to quality check. # wisewriterv3
+## Book Sale
+- Prepare the book for distribution and sale.
 
-//TODO 
-1. upload to pinterest
-2.create pinterest ad
-3.monitor ad
-4.Reiteration of product
+### Upload to Amazon
+- Utilize Puppeteer to upload the ebook to Amazon as a draft.
+
+## TODO
+1. Upload to Pinterest
+2. Create Pinterest ad
+3. Monitor ad performance
+4. Product reiteration
