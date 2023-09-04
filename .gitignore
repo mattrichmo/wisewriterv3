@@ -6,6 +6,8 @@
 *.bmp
 *.json
 *.DS_Store
+*.xhtml
+*.css
 
 # Ignore export folder
 /export/
