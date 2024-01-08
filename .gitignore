@@ -1,13 +1,4 @@
-# Ignore all image files
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.bmp
-*.json
-*.DS_Store
-*.xhtml
-*.css
+
 
 # Ignore export folder
 /export/
