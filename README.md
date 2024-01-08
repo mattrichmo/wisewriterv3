@@ -1,5 +1,5 @@
 
-![WiseWriterV3](./img/bg.png)
+![WiseWriterV3](bg.png)
 
 # Wisewriter V3 Process
 
