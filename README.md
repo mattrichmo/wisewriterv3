@@ -1,3 +1,6 @@
+
+![WiseWriterV3](./bg.png)
+
 # Wisewriter V3 Process
 
 The Wisewriter V3 Process is a book creation approach that automates pre-product ideation, product launch, and post-product activities. It uses tools such as OpenAI, Replica, Midjourney, and CanvasHTML to automate various stages in the creation and launch of books. Below is a detailed breakdown of the Wisewriter V3 process.
